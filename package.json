@@ -1,5 +1,5 @@
 {
-  "name": "hamdarduniversitybangladesh",
+  "name": "hub-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,9 +11,17 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "aos": "^2.3.4",
+    "framer-motion": "^12.23.22",
     "react": "^19.1.1",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.1.1",
-    "tailwindcss": "^4.1.13"
+    "react-helmet-async": "^2.0.5",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.9.3",
+    "react-share": "^5.2.2",
+    "tailwindcss": "^4.1.13",
+    "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

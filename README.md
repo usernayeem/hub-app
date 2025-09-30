@@ -1,16 +1,33 @@
-# React + Vite
+# Hamdard University Bangladesh Mobile App - Download Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description
 
-Currently, two official plugins are available:
+This website is a modern, student-developed landing page for the **Hamdard University Bangladesh Mobile App (HUB App)**. The site serves as a user-friendly information portal and official download source for the Android application. It provides a clear overview of the app, secure download links, real-time download statistics, and contact options—all optimized for both desktop and mobile browsers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Live Preview:**  
+https://hamdarduniversitybangladesh.netlify.app/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Official APK Download:** Provides a secure, direct download link to the latest Android APK of the HUB Mobile App.
+- **About the App:** Clearly explains what the mobile app does, its benefits, and how it works.
+- **Live Download Counter:** Displays real-time statistics of total app downloads.
+- **Developer & Support Info:** Transparent student developer profile, with direct contact and social links.
+- **Feature Highlights:** Visually showcases the main benefits and features of the mobile app.
+- **Share Functionality:** One-click sharing via Facebook, Twitter, WhatsApp, and copy-to-clipboard for friends.
+- **Dark Mode Support:** Seamless light/dark theme for accessibility.
+- **Student Project Notice:** Clearly states that this is an independent, student-initiated website and not an official university property.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- **Frontend:** React 19 (with Vite)
+- **UI:** Tailwind CSS 4, react-icons
+- **Routing:** React Router DOM 7
+- **Social Sharing:** react-share
+- **SEO:** react-helmet-async (Open Graph, Twitter, and Schema.org tags)
+- **State Management:** React Context API
+- **Download Tracking:** Consumes an API endpoint for real-time download statistics
