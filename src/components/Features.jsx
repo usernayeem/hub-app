@@ -1,244 +1,129 @@
-import React, { useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { FaRocket, FaBell, FaMobile, FaGlobe } from "react-icons/fa";
+import React from "react";
+import {
+  FaDownload,
+  FaLaptop,
+  FaMobileAlt,
+  FaSync,
+  FaShieldAlt,
+  FaClock
+} from "react-icons/fa";
 
 export const Features = () => {
-  const [hasAnimated, setHasAnimated] = useState(false);
-
   const leftFeatures = [
     {
-      icon: <FaRocket className="text-blue-600 dark:text-blue-400 text-xl" />,
-      title: "Easy Access",
+      icon: <FaDownload className="text-blue-600 dark:text-blue-400 text-xl" />,
+      title: "All-in-One Hub",
       description:
-        "Quick and simple access to university web portal through webview",
+        "Centralized platform for downloading all Hamdard University Bangladesh software",
       bgColor: "bg-blue-100 dark:bg-blue-900/50",
     },
     {
-      icon: <FaBell className="text-purple-600 dark:text-purple-400 text-xl" />,
-      title: "Easy Navigation",
+      icon: <FaLaptop className="text-purple-600 dark:text-purple-400 text-xl" />,
+      title: "Multi-Platform",
       description:
-        "Intuitive interface design for effortless navigation through the app",
+        "Support for Windows, Android, webview, and native applications",
       bgColor: "bg-purple-100 dark:bg-purple-900/50",
+    },
+    {
+      icon: <FaMobileAlt className="text-orange-600 dark:text-orange-400 text-xl" />,
+      title: "Mobile Friendly",
+      description:
+        "Access and download apps seamlessly from any mobile device",
+      bgColor: "bg-orange-100 dark:bg-orange-900/50",
     },
   ];
 
   const rightFeatures = [
     {
-      icon: (
-        <FaMobile className="text-orange-600 dark:text-orange-400 text-xl" />
-      ),
-      title: "Mobile Optimized",
+      icon: <FaSync className="text-green-600 dark:text-green-400 text-xl" />,
+      title: "Always Updated",
       description:
-        "Perfectly designed and optimized for mobile devices and touch interface",
-      bgColor: "bg-orange-100 dark:bg-orange-900/50",
+        "Latest versions of all university applications in one place",
+      bgColor: "bg-green-100 dark:bg-green-900/50",
     },
     {
-      icon: <FaGlobe className="text-green-600 dark:text-green-400 text-xl" />,
-      title: "WebView App",
+      icon: <FaShieldAlt className="text-red-600 dark:text-red-400 text-xl" />,
+      title: "Safe & Secure",
       description:
-        "Direct access to university website through integrated webview browser",
-      bgColor: "bg-green-100 dark:bg-green-900/50",
+        "Verified downloads directly from official university sources",
+      bgColor: "bg-red-100 dark:bg-red-900/50",
+    },
+    {
+      icon: <FaClock className="text-teal-600 dark:text-teal-400 text-xl" />,
+      title: "Quick Access",
+      description:
+        "Fast downloads with no registration or complicated procedures",
+      bgColor: "bg-teal-100 dark:bg-teal-900/50",
     },
   ];
 
-  // Check if component is in view
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { amount: 0.2 });
-
-  // Trigger animation when in view or on mount
-  useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setHasAnimated(true);
-    }
-  }, [isInView, hasAnimated]);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const featureVariants = {
-    hidden: { x: -50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const rightFeatureVariants = {
-    hidden: { x: 50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const mockupVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const iconVariants = {
-    hover: {
-      scale: 1.2,
-      rotate: 10,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
   return (
-    <motion.div
-      ref={ref}
-      className="py-16 bg-gray-50 dark:bg-gray-800 transition-colors"
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
-    >
+    <div className="py-16 bg-gray-50 dark:bg-gray-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
-          {/* Left Features */}
-          <div className="space-y-16 lg:text-right order-2 lg:order-1">
+          <div className="space-y-12 lg:text-right order-2 lg:order-1">
             {leftFeatures.map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                className="relative"
-                variants={featureVariants}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
+                className="relative hover:scale-105 transition-transform duration-200"
               >
                 <div className="flex items-center gap-4 lg:flex-row-reverse">
-                  <motion.div
-                    className={`w-12 h-12 ${feature.bgColor} rounded-full flex items-center justify-center flex-shrink-0`}
-                    variants={iconVariants}
-                    whileHover="hover"
+                  <div
+                    className={`w-12 h-12 ${feature.bgColor} rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 hover:rotate-6 transition-transform duration-300`}
                   >
                     {feature.icon}
-                  </motion.div>
+                  </div>
                   <div>
-                    <motion.h3
-                      className="font-semibold text-gray-900 dark:text-white text-lg"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.2 + index * 0.1 }}
-                    >
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
                       {feature.title}
-                    </motion.h3>
-                    <motion.p
-                      className="text-gray-600 dark:text-gray-400"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                    >
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
                       {feature.description}
-                    </motion.p>
+                    </p>
                   </div>
                 </div>
-                {/* Connection line for desktop */}
-                <motion.div
-                  className="hidden lg:block absolute top-1/2 -right-16 w-12 h-0.5 bg-gradient-to-r from-green-600 to-green-400 dark:from-green-500 dark:to-green-300 transform -translate-y-1/2"
-                  initial={{ scaleX: 0 }}
-                  animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                  transition={{ delay: 0.5 + index * 0.2, duration: 0.8 }}
-                ></motion.div>
-              </motion.div>
+                <div className="hidden lg:block absolute top-1/2 -right-16 w-12 h-0.5 bg-gradient-to-r from-green-600 to-green-400 dark:from-green-500 dark:to-green-300 transform -translate-y-1/2"></div>
+              </div>
             ))}
           </div>
 
-          {/* Center Mockup */}
           <div className="flex justify-center order-1 lg:order-2">
-            <motion.div
-              className="relative mx-auto max-w-xs"
-              variants={mockupVariants}
-              whileHover={{
-                scale: 1.05,
-                rotateY: 10,
-                transition: { duration: 0.3 },
-              }}
-            >
-              <motion.img
+            <div className="relative mx-auto max-w-xs hover:scale-105 transition-transform duration-300">
+              <img
                 src="/images/mockup.webp"
-                alt="Hamdard University Bangladesh Mobile App Mockup"
+                alt="Hamdard University Bangladesh Apps Mockup"
                 className="drop-shadow-lg"
-                initial={{ rotateY: -10 }}
-                animate={isInView ? { rotateY: 0 } : { rotateY: -10 }}
-                transition={{ duration: 1, ease: "easeOut" }}
               />
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right Features */}
-          <div className="space-y-16 order-3">
+          <div className="space-y-12 order-3">
             {rightFeatures.map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                className="relative"
-                variants={rightFeatureVariants}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
+                className="relative hover:scale-105 transition-transform duration-200"
               >
                 <div className="flex items-center gap-4">
-                  <motion.div
-                    className={`w-12 h-12 ${feature.bgColor} rounded-full flex items-center justify-center flex-shrink-0`}
-                    variants={iconVariants}
-                    whileHover="hover"
+                  <div
+                    className={`w-12 h-12 ${feature.bgColor} rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 hover:rotate-6 transition-transform duration-300`}
                   >
                     {feature.icon}
-                  </motion.div>
+                  </div>
                   <div>
-                    <motion.h3
-                      className="font-semibold text-gray-900 dark:text-white text-lg"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.2 + index * 0.1 }}
-                    >
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
                       {feature.title}
-                    </motion.h3>
-                    <motion.p
-                      className="text-gray-600 dark:text-gray-400"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                    >
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
                       {feature.description}
-                    </motion.p>
+                    </p>
                   </div>
                 </div>
-                {/* Connection line for desktop */}
-                <motion.div
-                  className="hidden lg:block absolute top-1/2 -left-16 w-12 h-0.5 bg-gradient-to-l from-green-600 to-green-400 dark:from-green-500 dark:to-green-300 transform -translate-y-1/2"
-                  initial={{ scaleX: 0 }}
-                  animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                  transition={{ delay: 0.5 + index * 0.2, duration: 0.8 }}
-                ></motion.div>
-              </motion.div>
+                <div className="hidden lg:block absolute top-1/2 -left-16 w-12 h-0.5 bg-gradient-to-l from-green-600 to-green-400 dark:from-green-500 dark:to-green-300 transform -translate-y-1/2"></div>
+              </div>
             ))}
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };

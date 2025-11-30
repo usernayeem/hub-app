@@ -3,38 +3,55 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const DownloadContext = createContext();
 
 export const DownloadProvider = ({ children }) => {
-  const [downloads, setDownloads] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [downloads, setDownloads] = useState({});
+  const [loading, setLoading] = useState({});
 
-  // Fetch initial download count
   useEffect(() => {
-    fetchDownloadCount();
+    fetchAllDownloadCounts();
   }, []);
 
-  const fetchDownloadCount = async () => {
+  const fetchAllDownloadCounts = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API}/totaldownloads`
       );
       if (response.ok) {
         const data = await response.json();
-        // Ensure we have a valid number before setting
-        if (data && typeof data.totalDownloadCount === 'number') {
-          setDownloads(data.totalDownloadCount);
+        if (data && typeof data === 'object') {
+          setDownloads(data);
         }
       }
     } catch (error) {
-      console.error("Error fetching download count:", error);
+      console.error("Error fetching download counts:", error);
     }
   };
 
-  const handleDownload = async () => {
-    if (loading) return; // Prevent multiple simultaneous requests
-
-    setLoading(true);
+  const fetchDownloadCount = async (appId) => {
     try {
-      // Send POST request to track download
-      const response = await fetch(`${import.meta.env.VITE_API}/totaldownloads`, {
+      const response = await fetch(
+        `${import.meta.env.VITE_API}/totaldownloads/${appId}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data && typeof data.totalDownloadCount === 'number') {
+          setDownloads(prev => ({
+            ...prev,
+            [appId]: data.totalDownloadCount
+          }));
+        }
+      }
+    } catch (error) {
+      console.error(`Error fetching download count for ${appId}:`, error);
+    }
+  };
+
+  const handleDownload = async (appId) => {
+    if (loading[appId]) return;
+
+    setLoading(prev => ({ ...prev, [appId]: true }));
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API}/totaldownloads/${appId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,40 +63,37 @@ export const DownloadProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        
-        // Only update count if we get a valid response with totalDownloadCount
+
         if (data && typeof data.totalDownloadCount === 'number') {
-          // Add 1-second delay before updating the download count
           setTimeout(() => {
-            setDownloads(data.totalDownloadCount);
+            setDownloads(prev => ({
+              ...prev,
+              [appId]: data.totalDownloadCount
+            }));
           }, 2000);
         } else {
-          // If response doesn't have valid count, refresh from server after 1 second
           setTimeout(async () => {
-            await fetchDownloadCount();
+            await fetchDownloadCount(appId);
           }, 1000);
         }
       } else {
-        // If response is not ok, refresh count from server after 1 second
         console.error("Download tracking failed, refreshing count");
         setTimeout(async () => {
-          await fetchDownloadCount();
+          await fetchDownloadCount(appId);
         }, 1000);
       }
-      
+
     } catch (error) {
       console.error("Error tracking download:", error);
-      // On error, try to refresh the count from server after 1 second
       setTimeout(async () => {
         try {
-          await fetchDownloadCount();
+          await fetchDownloadCount(appId);
         } catch (refreshError) {
           console.error("Error refreshing download count:", refreshError);
-          // Keep the existing count if refresh also fails
         }
       }, 1000);
     } finally {
-      setLoading(false);
+      setLoading(prev => ({ ...prev, [appId]: false }));
     }
   };
 
@@ -87,7 +101,7 @@ export const DownloadProvider = ({ children }) => {
     downloads,
     handleDownload,
     loading,
-    refreshDownloadCount: fetchDownloadCount,
+    refreshDownloadCount: fetchAllDownloadCounts,
   };
 
   return (

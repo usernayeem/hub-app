@@ -12,13 +12,13 @@ export const Footer = () => {
             📚 Developed by Student, Developed for Students
           </p>
           <p className="text-white">
-            This app is developed with passion to help fellow students access
+            These app is developed with passion to help fellow students access
             university resources easily. For more information click{" "}
             <Link
               to="/about"
               className="text-blue-700 hover:text-blue-800 underline font-semibold transition-colors"
             >
-              About This App
+              Here
             </Link>
           </p>
         </div>

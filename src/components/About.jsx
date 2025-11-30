@@ -1,464 +1,204 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 export const About = () => {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
-  const headerVariants = {
-    hidden: { y: -50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-    hover: {
-      scale: 1.02,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
-
-  const profileImageVariants = {
-    hidden: { scale: 0, rotate: -180 },
-    visible: {
-      scale: 1,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-      },
-    },
-    hover: {
-      scale: 1.1,
-      rotate: 5,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const listItemVariants = {
-    hidden: { x: -20, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-      },
-    },
-  };
-
   return (
-    <motion.div
-      className="min-h-screen bg-white dark:bg-gray-900 transition-colors"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      {/* Header */}
-      <motion.div
-        className="bg-green-600 dark:bg-green-700 py-8"
-        variants={headerVariants}
-      >
+    <div className="w-full min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      <div className="bg-green-600 dark:bg-green-700 py-8">
         <div className="max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-white hover:text-green-100 transition-colors mb-4"
           >
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-white hover:text-green-100 transition-colors mb-4"
-            >
-              <motion.div whileHover={{ x: -5 }} transition={{ duration: 0.2 }}>
-                <FaArrowLeft />
-              </motion.div>
-              Back to Home
-            </Link>
-          </motion.div>
-          <motion.h1
-            className="text-3xl font-bold text-white"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            About This App
-          </motion.h1>
-          <motion.p
-            className="text-green-100 mt-2"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            Everything you need to know about the HUB Mobile App
-          </motion.p>
+            <div className="hover:-translate-x-1 transition-transform duration-200">
+              <FaArrowLeft />
+            </div>
+            Back to Home
+          </Link>
+          <h1 className="text-3xl font-bold text-white">About These Apps</h1>
+          <p className="text-green-100 mt-2">
+            Everything you need to know about HUB Mobile Apps
+          </p>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Content */}
-      <motion.div
-        className="max-w-4xl mx-auto px-4 py-12"
-        variants={containerVariants}
-      >
+      <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          {/* What This App Does */}
-          <motion.h3
-            className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2"
-            variants={itemVariants}
-            whileInView={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            📱 What Does This App Do?
-          </motion.h3>
-          <motion.div
-            className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8"
-            variants={cardVariants}
-            whileInView="visible"
-            whileHover="hover"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.ul
-              className="space-y-3 text-gray-700 dark:text-gray-300"
-              variants={containerVariants}
-            >
-              {[
-                "Opens the official HUB website in a mobile-friendly way",
-                "Makes it easier to check grades, schedules, and announcements on your phone",
-                "Works exactly like the website - no tricks, no ads, no nonsense",
-                "Completely free - no hidden costs or subscriptions",
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  className="flex items-start gap-3"
-                  variants={listItemVariants}
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <motion.span
-                    className="text-blue-600 dark:text-blue-400 text-xl"
-                    whileHover={{ scale: 1.3, rotate: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    ✓
-                  </motion.span>
-                  <span>{item}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            📱 Available Applications
+          </h3>
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8 hover:scale-105 transition-transform duration-300">
+            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+              <div className="border-l-4 border-green-600 pl-4">
+                <h4 className="font-semibold text-lg mb-2">HUB Mobile App</h4>
+                <p>
+                  Opens the official HUB website in a mobile-friendly way. Makes
+                  it easier to check grades, schedules, and announcements on
+                  your phone.
+                </p>
+              </div>
+              <div className="border-l-4 border-blue-600 pl-4">
+                <h4 className="font-semibold text-lg mb-2">HUB Library</h4>
+                <p>
+                  Library Management System for Hamdard University Bangladesh
+                  (English Department). Manage books, borrowing records, and
+                  track availability.
+                </p>
+              </div>
+            </div>
+          </div>
 
-          {/* Is It Safe? */}
-          <motion.h3
-            className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2"
-            variants={itemVariants}
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            🔒 Is It Safe?
-          </motion.h3>
-          <motion.div
-            className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 mb-8"
-            variants={cardVariants}
-            whileInView="visible"
-            whileHover="hover"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.p
-              className="text-gray-700 dark:text-gray-300 mb-4 text-lg"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <strong>Absolutely!</strong> Here's why you can trust this app:
-            </motion.p>
-            <motion.ul
-              className="space-y-3 text-gray-700 dark:text-gray-300"
-              variants={containerVariants}
-            >
-              {[
-                {
-                  icon: "🛡️",
-                  text: "Your passwords and personal info stay between you and the university website",
-                },
-                {
-                  icon: "👀",
-                  text: "It's a webview app that's more like a browser app that only loads the official website of the university within the app",
-                },
-                { icon: "💾", text: "Nothing is saved or stored by the app" },
-                {
-                  icon: "🏛️",
-                  text: "You're still using the official university website, just in a mobile app",
-                },
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  className="flex items-start gap-3"
-                  variants={listItemVariants}
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <motion.span
-                    className="text-green-600 dark:text-green-400 text-xl"
-                    whileHover={{ scale: 1.3, rotate: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {item.icon}
-                  </motion.span>
-                  <span>{item.text}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            🔒 Are They Safe?
+          </h3>
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 mb-8 hover:scale-105 transition-transform duration-300">
+            <p className="text-gray-700 dark:text-gray-300 mb-4 text-lg">
+              <strong>Absolutely!</strong> Here's why you can trust these apps:
+            </p>
+            <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+              <li className="flex items-start gap-3">
+                <span className="text-green-600 dark:text-green-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  🛡️
+                </span>
+                <span>
+                  Your passwords and personal info stay between you and the
+                  university systems
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-600 dark:text-green-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  👀
+                </span>
+                <span>
+                  HUB Mobile is a webview app - like a browser that only loads
+                  the official website
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-600 dark:text-green-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  💾
+                </span>
+                <span>No data is saved or stored by the apps</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-green-600 dark:text-green-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  🏛️
+                </span>
+                <span>Both apps connect to official university systems</span>
+              </li>
+            </ul>
+          </div>
 
-          {/* About the Developer */}
-          <motion.h3
-            className="text-xl font-semibold text-gray-900 dark:text-white mb-4"
-            variants={itemVariants}
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            💻 Who Developed This App?
-          </motion.h3>
-          <motion.div
-            className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8"
-            variants={cardVariants}
-            whileInView="visible"
-            whileHover="hover"
-            viewport={{ once: true, amount: 0.3 }}
-          >
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            💻 Who Developed These Apps?
+          </h3>
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8 hover:scale-105 transition-transform duration-300">
             <div className="flex items-center gap-4 mb-4">
-              <motion.div
-                className="w-16 h-16 rounded-full overflow-hidden"
-                variants={profileImageVariants}
-                whileInView="visible"
-                whileHover="hover"
-                viewport={{ once: true }}
-              >
+              <div className="w-16 h-16 rounded-full overflow-hidden hover:scale-110 hover:rotate-6 transition-transform duration-300">
                 <img
                   src="https://i.ibb.co/KxyFtNwk/A-confident-young-ma.webp"
                   loading="lazy"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
-              </motion.div>
-              <motion.div
-                initial={{ x: 20, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                viewport={{ once: true }}
-              >
+              </div>
+              <div>
                 <h4 className="font-semibold text-gray-900 dark:text-white">
                   Md Nayeem
                 </h4>
                 <p className="text-gray-600 dark:text-gray-400">
                   BA (English Dept.) student at Hamdard University Bangladesh
                 </p>
-                <motion.p
-                  className="text-sm text-green-600 dark:text-green-400"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <p className="text-sm text-green-600 dark:text-green-400">
                   Full Stack Developer
-                </motion.p>
-              </motion.div>
+                </p>
+              </div>
             </div>
-            <motion.p
-              className="text-gray-700 dark:text-gray-300 leading-relaxed"
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              viewport={{ once: true }}
-            >
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               I'm a student who cares about making student life easier. I
-              realized that having our university website as a webview app would
-              be much more convenient than opening browsers every time. It's my
-              way of contributing to our amazing university community and giving
-              everyone quicker, one-tap access to the university website. 🎓
-            </motion.p>
-          </motion.div>
+              developed these apps to give everyone quicker, one-tap access to
+              university resources and library management. It's my way of
+              contributing to our amazing university community. 🎓
+            </p>
+          </div>
 
-          {/* Important Notice */}
-          <motion.h3
-            className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2"
-            variants={itemVariants}
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             📋 Important Things to Know
-          </motion.h3>
-          <motion.div
-            className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-6 mb-8"
-            variants={cardVariants}
-            whileInView="visible"
-            whileHover="hover"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.ul
-              className="space-y-3 text-gray-700 dark:text-gray-300"
-              variants={containerVariants}
-            >
-              {[
-                {
-                  icon: "⚠️",
-                  text: "This is a student project - not an official university app",
-                },
-                {
-                  icon: "🏛️",
-                  text: "The university didn't ask me to make this (but I hope they like it!)",
-                },
-                {
-                  icon: "📞",
-                  text: "For official university questions, contact the university directly",
-                },
-                {
-                  icon: "💬",
-                  text: "For app related questions or suggestions, ask HUB-GPT",
-                },
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  className="flex items-start gap-3"
-                  variants={listItemVariants}
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <motion.span
-                    className="text-yellow-600 dark:text-yellow-400 text-xl"
-                    whileHover={{ scale: 1.3, rotate: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {item.icon}
-                  </motion.span>
-                  <span>
-                    {item.text.includes("student project") ? (
-                      <>
-                        This is a <strong>student project</strong> - not an
-                        official university app
-                      </>
-                    ) : (
-                      item.text
-                    )}
-                  </span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
+          </h3>
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-6 mb-8 hover:scale-105 transition-transform duration-300">
+            <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 dark:text-yellow-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  ⚠️
+                </span>
+                <span>
+                  These are <strong>student projects</strong> - not official
+                  university apps
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 dark:text-yellow-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  🏛️
+                </span>
+                <span>
+                  The university didn't ask me to make these (but I hope they
+                  like them!)
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 dark:text-yellow-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  📞
+                </span>
+                <span>
+                  For official university questions, contact the university
+                  directly
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 dark:text-yellow-400 text-xl hover:scale-125 hover:rotate-12 transition-transform duration-200">
+                  💬
+                </span>
+                <span>For app related questions or suggestions, ask HUB-GPT</span>
+              </li>
+            </ul>
+          </div>
 
-          {/* Questions or Problems */}
-          <motion.h3
-            className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2"
-            variants={itemVariants}
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             🤝 Questions or Problems?
-          </motion.h3>
-          <motion.div
-            className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8"
-            variants={cardVariants}
-            whileInView="visible"
-            whileHover="hover"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.p
-              className="text-gray-700 dark:text-gray-300 mb-4"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-            >
+          </h3>
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8 hover:scale-105 transition-transform duration-300">
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
               I'm here to help! If you have any questions, suggestions, or run
               into problems:
-            </motion.p>
-            <motion.div className="space-y-3" variants={containerVariants}>
-              <motion.a
+            </p>
+            <div className="space-y-3">
+              <a
                 href="mailto:mdnayeem14916@gmail.com"
-                className="flex items-center gap-3 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                variants={listItemVariants}
-                whileInView="visible"
-                whileHover={{ scale: 1.02, x: 10 }}
-                viewport={{ once: true }}
+                className="flex items-center gap-3 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors hover:translate-x-2 duration-200"
               >
-                <motion.span
-                  className="text-xl"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <span className="text-xl hover:scale-125 transition-transform duration-200">
                   📧
-                </motion.span>
+                </span>
                 <span className="font-medium">
                   Email me: mdnayeem14916@gmail.com
                 </span>
-              </motion.a>
-              <motion.a
+              </a>
+              <a
                 href="https://www.facebook.com/md.nayeem.2004"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                variants={listItemVariants}
-                whileInView="visible"
-                whileHover={{ scale: 1.02, x: 10 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
+                className="flex items-center gap-3 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors hover:translate-x-2 duration-200"
               >
-                <motion.span
-                  className="text-xl"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <span className="text-xl hover:scale-125 transition-transform duration-200">
                   📱
-                </motion.span>
+                </span>
                 <span className="font-medium">Message me on Facebook</span>
-              </motion.a>
-            </motion.div>
-          </motion.div>
+              </a>
+            </div>
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };

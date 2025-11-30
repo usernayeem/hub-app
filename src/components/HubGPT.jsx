@@ -3,8 +3,6 @@ import {
   FaTimes,
   FaPaperPlane,
   FaRobot,
-  FaCopy,
-  FaCheck,
 } from "react-icons/fa";
 
 export const HubGPT = () => {
@@ -12,11 +10,9 @@ export const HubGPT = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [copiedMessageId, setCopiedMessageId] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Scroll to bottom when new messages are added
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -25,61 +21,36 @@ export const HubGPT = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Focus input when chat opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Load chat history from localStorage
   useEffect(() => {
     const savedMessages = localStorage.getItem("hub-gpt-messages");
     if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     } else {
-      // Add welcome message
       setMessages([
         {
           id: 1,
           type: "bot",
           content:
-            "Hello! I'm HUB-GPT, your virtual assistant. I can help you with:\n\n• Information about the HUB Mobile App\n• Details about the developer (Md Nayeem)\n• Download links and app features\n• Hamdard University Bangladesh info\n\nWhat would you like to know?",
+            "Hello! I'm HUB-GPT, your virtual assistant. I can help you with:\n\n• Information about HUB Mobile App and HUB Library\n• Details about the developer (Md Nayeem)\n• Download links and app features\n• Hamdard University Bangladesh info\n\nWhat would you like to know?",
           timestamp: new Date(),
         },
       ]);
     }
   }, []);
 
-  // Save messages to localStorage
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem("hub-gpt-messages", JSON.stringify(messages));
     }
   }, [messages]);
 
-  // Copy message function
-  const copyMessage = async (content, messageId) => {
-    try {
-      await navigator.clipboard.writeText(content);
-      setCopiedMessageId(messageId);
-      setTimeout(() => setCopiedMessageId(null), 2000);
-    } catch (error) {
-      // Fallback for older browsers
-      const textArea = document.createElement("textarea");
-      textArea.value = content;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      setCopiedMessageId(messageId);
-      setTimeout(() => setCopiedMessageId(null), 2000);
-    }
-  };
-
-  // Function to convert URLs in text to clickable links
   const renderTextWithLinks = (text) => {
-    // URL regex pattern
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const parts = text.split(urlRegex);
 
@@ -104,10 +75,10 @@ export const HubGPT = () => {
 
   const suggestedQuestions = [
     "What is the HUB Mobile App?",
-    "Is the app safe to use?",
-    "Who developed this app?",
-    "How can I download the app?",
-    "Tell me about Hamdard University Bangladesh",
+    "Tell me about HUB Library",
+    "Who developed these apps?",
+    "How can I download the apps?",
+    "What features does HUB Library have?",
   ];
 
   const handleSend = async () => {
@@ -126,7 +97,6 @@ export const HubGPT = () => {
     setIsLoading(true);
 
     try {
-      // Pass conversation history for context
       const response = await sendToGroq(currentInput, [
         ...messages,
         userMessage,
@@ -162,54 +132,64 @@ export const HubGPT = () => {
   const sendToGroq = async (message, conversationHistory) => {
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
-    console.log("🚀 Making API request to Groq...");
-    console.log("Groq API Key:", API_KEY?.substring(0, 15) + "...");
-
     if (!API_KEY) {
       throw new Error("Groq API key not configured in environment variables");
     }
 
-    const systemPrompt = `You are HUB-GPT, a virtual assistant. You can ONLY answer questions about these specific topics:
+    const systemPrompt = `You are HUB-GPT, a virtual assistant for Hamdard University Bangladesh applications. You can ONLY answer questions about these specific topics:
 
-1. The HUB Mobile App (Hamdard University Bangladesh Mobile App):
-   - It's a webview app that provides easy access to the university portal
-   - Features include checking grades, schedules, announcements etc
-   - It's free to download for Android
+1. HUB Mobile App (Hamdard University Bangladesh Mobile App):
+   - A webview app that provides easy access to the university portal
+   - Features include checking grades, schedules, announcements, etc.
+   - Free to download for Android
    - Mobile-optimized interface
-   - Download link (This app downloading website is hosted by the developer on his own server, not in the official website of the university. But it is safe): https://hamdarduniversitybangladesh.netlify.app/
-   - APK file: HamdardUniversityBangladesh.apk
+   - Download link: https://hubsoftwares.netlify.app/
+   - APK file: Hamdard University Bangladesh.apk
 
-2. The app is safe to use:
-   - No ads, no tracking, no data collection
-   - It's a simple webview wrapper around the official university portal. It's more like a browser app that only loads the official website within the app
-   - The developer is a student of the university and created this as a student project to help fellow students
-   - The app does not require any special permissions on the device
-   - It does not store any personal data locally
-   - It only accesses the internet to load the official university website within the app
-   - The developer is not affiliated with Hamdard University Bangladesh, this is an independent student project
+2. HUB Library (Library Management System):
+   - Library Management Web Application for Hamdard University Bangladesh (English Department)
+   - Enables central management of books, borrowing records, and availability data
+   - Features:
+     * View available books with details (title, author, category, quantity, availability)
+     * Track borrowed books with due dates and return status
+     * Admin controls: manage books, borrowing records, user permissions
+     * Add, update, or delete books from the system
+     * Promote users to admin or demote to viewer
+     * Delete users and update own name and designation
+   - Download link: https://hubsoftwares.netlify.app/
+   - APK file: HUB Library.apk
 
-3. The Developer (Md Nayeem):
+3. Safety & Security:
+   - Both apps are safe to use with no ads, tracking, or data collection
+   - HUB Mobile is a simple webview wrapper around the official university portal
+   - HUB Library is a simple webview wrapper around the official library management system of the English Department
+   - Developed by a student to help fellow students
+   - No special permissions required
+   - All data stays between the user and the university systems
+
+4. The Developer (Md Nayeem):
    - Name: Md Nayeem
    - BA Student at Hamdard University Bangladesh (27th Batch, Dept of English)
    - Email: mdnayeem14916@gmail.com
    - Facebook: https://www.facebook.com/md.nayeem.2004
    - Twitter: https://twitter.com/usernayeem
-   - This is a student project, not officially affiliated with the university. But it loads the official website of the university.
+   - Student projects, not officially affiliated with the university
 
-4. Download Information:
-   - Available for Android devices
-   - Free download
-   - Website(developer own this domain): https://hamdarduniversitybangladesh.netlify.app/
-   - APK file size(720 bytes) and requirements as appropriate
+5. Download Information:
+   - Both apps available for Android devices
+   - Free downloads
+   - Website: https://hubsoftwares.netlify.app/
+   - APK file sizes and requirements as appropriate
 
-5. Hamdard University Bangladesh:
-
+6. Hamdard University Bangladesh:
 Overview and Philosophy
+
+Official English Department Library website url: https://hublibrary.netlify.app/
 
 Official university website url: https://www.hamdarduniversity.edu.bd/
 For admission: https://www.admission.hamdarduniversity.edu.bd/
 
-Hamdard University Bangladesh (HUB) is a private university established in 2012 under the Private University Act 2010. It is situated in Hamdard City of Science, Education & Culture in Gazaria, Munshiganj, Bangladesh. The university was founded by Dr. Hakim Mohammad Yousuf Harun Bhuiyan and is funded by Hamdard Laboratories (Waqf) Bangladesh. As a non-profit and non-political institution, its core values are rooted in philanthropy, love for humanity, and the promotion of education and culture. The university is officially recognized by the University Grants Commission (UGC) of Bangladesh and commenced its academic journey on November 29, 2012. HUB aims to provide a holistic education that fosters the intellectual, social, and personal growth of its students in an environment that encourages open discussion and intellectual freedom.
+Hamdard University Bangladesh (HUB) is a private university established in 2012 under the Private University Act 2010. It is situated in Hamdard City of Science, Education & Culture in Gazaria, Munshiganj, Bangladesh. The university was founded by Dr. Hakim Mohammad Yousuf Harun Bhuiyan and is funded by Hamdard Laboratories (Waqf) Bangladesh. As a non-profit and non-political institution, its core values are rooted in philanthropy, love for humanity, and the promotion of education and culture. The university is officially recognized by the University Grants Commission (UGC) of Bangladesh and commenced its academic journey on November 29, 2012.
 
 Academic Structure and Programs
 
@@ -241,33 +221,26 @@ Graduate Programs:
 
 Campus Life and Facilities
 
-HUB offers a comprehensive campus experience with various facilities and extracurricular opportunities.
-
 Facilities:
- - Library:** A central library serving students and faculty.
- - Laboratories:** Modern and well-equipped labs for practical learning.
- - Hostels:** On-campus residential facilities for students.
- - Cafeterias:** On-campus dining options.
- - Transportation:** Bus services for students and staff.
+ - Library: A central library serving students and faculty
+ - Laboratories: Modern and well-equipped labs for practical learning
+ - Hostels: On-campus residential facilities for students
+ - Cafeterias: On-campus dining options
+ - Transportation: Bus services for students and staff
 
 Extracurricular Activities:
-The university encourages student engagement through various clubs, including a Photography Club, Cultural Club, Sports Club, Computer Programming and Skill Development Club, HEEE Robotics Club, and the Voice of Business club.
-
-Research and Quality Assurance
-
-HUB is committed to fostering a culture of research and academic excellence. It has an Internal Quality Assurance Cell (IQAC) to ensure high standards in education. The university's research focus is aligned with the mission of its parent organization, Hamdard, which includes the scientific advancement and promotion of the Eastern System of Medicine.
+The university encourages student engagement through various clubs, including Photography Club, Cultural Club, Sports Club, Computer Programming and Skill Development Club, HEEE Robotics Club, and the Voice of Business club.
 
 IMPORTANT RULES:
 - If asked about anything outside these topics, politely redirect to the approved topics
-- Be helpful, friendly, and Brief
-- Always mention this is a student project when relevant
+- Be helpful, friendly, and brief
+- Always mention these are student projects when relevant
 - For technical issues, suggest contacting the developer directly
 - Don't make up information - stick to what you know about these topics
 - Use conversation history to provide better contextual responses
 
 RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to the point. Avoid long explanations unless specifically asked for details.`;
 
-    // Convert conversation history to API format (last 10 messages for context)
     const recentMessages = conversationHistory.slice(-10).map((msg) => ({
       role: msg.type === "user" ? "user" : "assistant",
       content: msg.content,
@@ -294,25 +267,19 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
         }
       );
 
-      console.log("📡 Response status:", response.status);
-
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("❌ API Error Response:", errorText);
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
-      console.log("✅ API Response successful!");
 
       if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-        console.error("❌ Invalid response structure:", data);
         throw new Error("Invalid response format from API");
       }
 
       return data.choices[0].message.content;
     } catch (error) {
-      console.error("💥 Fetch error:", error);
       throw error;
     }
   };
@@ -337,7 +304,7 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
         id: 1,
         type: "bot",
         content:
-          "Hello! I'm HUB-GPT, your virtual assistant. I can help you with:\n\n• Information about the HUB Mobile App\n• Details about the developer (Md Nayeem)\n• Download links and app features\n• Hamdard University Bangladesh info\n\nWhat would you like to know?",
+          "Hello! I'm HUB-GPT, your virtual assistant. I can help you with:\n\n• Information about HUB Mobile App and HUB Library\n• Details about the developer (Md Nayeem)\n• Download links and app features\n• Hamdard University Bangladesh info\n\nWhat would you like to know?",
         timestamp: new Date(),
       },
     ]);
@@ -346,7 +313,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
 
   return (
     <>
-      {/* Floating Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(true)}
@@ -356,14 +322,11 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
           title="Chat with HUB-GPT"
           aria-label="Open HUB-GPT chatbot"
         >
-          {/* Chatbot name */}
           <span className="text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-800 px-2 py-1 rounded-full shadow-lg mb-1 border border-gray-200 dark:border-gray-600 z-10">
             HUB-GPT
           </span>
 
-          {/* Logo and Chat Icon Container */}
           <div className="relative">
-            {/* Animated pulse for attention - behind logo */}
             <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-30"></div>
             <div className="absolute inset-0 bg-green-300 rounded-full animate-pulse opacity-20"></div>
 
@@ -373,7 +336,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
               alt="HUB Logo"
               className="relative z-10 w-12 h-12 rounded-full shadow-lg border-2 border-white hover:shadow-xl transition-shadow duration-300 opacity-100"
             />
-            {/* Chat bubble indicator */}
             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white z-20">
               <svg
                 className="w-3 h-3 text-white"
@@ -391,10 +353,8 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
         </button>
       </div>
 
-      {/* Chat Interface */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-96 h-[32rem] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden chat-animate-in">
-          {/* Header */}
           <div className="bg-green-600 dark:bg-green-700 text-white p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img
@@ -436,7 +396,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
             </div>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message) => (
               <div
@@ -453,7 +412,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
                   }`}
                   style={{ wordBreak: "break-word", overflowWrap: "anywhere" }}
                 >
-                  {/* Bot title */}
                   {message.type === "bot" && (
                     <div className="flex items-center gap-2 mb-2 text-xs opacity-70">
                       <FaRobot />
@@ -497,7 +455,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
               </div>
             )}
 
-            {/* Suggested Questions (only show if no user messages yet) */}
             {messages.filter((m) => m.type === "user").length === 0 &&
               !isLoading && (
                 <div className="space-y-2">
@@ -519,7 +476,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex gap-2">
               <input
@@ -528,7 +484,7 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me about HUB app..."
+                placeholder="Ask me about HUB apps..."
                 className="flex-1 text-base px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                 disabled={isLoading}
               />
@@ -544,7 +500,6 @@ RESPONSE STYLE: Keep all responses SHORT (4-5 sentences max). Be direct and to t
         </div>
       )}
 
-      {/* Mobile responsive styles */}
       <style>{`
         @media (max-width: 640px) {
           .chat-animate-in {
